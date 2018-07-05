@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# 실행 시 서버에서 이미 실행중이던 uwsgi프로세스들을 모두 종료하고
+# 기존루틴 실행
+# 이후 runserver대신 uwsgi를 실행 (ini파일을 사용)
 
 IDENTITY_FILE="$HOME/.ssh/fc-8th.pem"
 USER="ubuntu"
