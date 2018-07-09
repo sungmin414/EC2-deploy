@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
-
+import json
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -17,8 +17,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 ROOT_DIR = os.path.dirname(BASE_DIR)
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
+SECRETS_DIR = os.path.join(ROOT_DIR, '.secrets')
 
-
+# Static
 STATICFILES_DIRS = [
     STATIC_DIR,
 ]
@@ -28,7 +29,12 @@ STATICFILES_DIRS = [
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9$8^zpd2d5rxf(wh0dhqcrqwd4vp7j1^vf7s*x_zz&@v2jhwwa'
+
+# 1. ec2-deploy/.secrets/base.json파일을 읽고
+# 2. 읽어온 결과 str을 파이썬 객체로 변환
+# 3. 변환한 객체는 dict형이므로, 해당 객체에서 ['SECRET_KEY']값을 아래 모듈 변수에 할당
+secrets = json.loads(open(os.path.join(SECRETS_DIR, 'base.json')).read())
+SECRET_KEY ='9$8^zpd2d5rxf(wh0dhqcrqwd4vp7j1^vf7s*x_zz&@v2jhwwa'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
@@ -47,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
 ]
 
 MIDDLEWARE = [
