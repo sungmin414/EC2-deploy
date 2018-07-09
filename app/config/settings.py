@@ -17,8 +17,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(BASE_DIR)
 STATIC_DIR = os.path.join(BASE_DIR,'static')
 TEMPLATES_DIR = os.path.join(BASE_DIR,'templates')
-
-
+MEDIA_ROOT = os.path.join(ROOT_DIR, '.media')
+MEDIA_URL = '/media/'
 
 STATICFILES_DIRS = [
     STATIC_DIR,
@@ -41,11 +41,12 @@ ALLOWED_HOSTS = [
     '.amazonaws.com',
 ]
 
+AUTH_USER_MODEL = 'members.User'
 
 # Application definition
 
 INSTALLED_APPS = [
-
+    'members',
 
 
     'django.contrib.admin',

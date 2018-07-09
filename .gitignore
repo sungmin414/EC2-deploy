@@ -4,6 +4,10 @@
 #Django STATIC_ROOT path
 /.static
 
+#Django MEDIA_ROOT path
+/.media
+
+
 ### Django ###
 *.log
 *.pot
