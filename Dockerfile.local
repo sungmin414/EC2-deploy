@@ -8,6 +8,7 @@ RUN         apt -y install nginx supervisor
 # Nginx
 RUN         apt -y install nginx
 
+ENV         BUILE_MODE      local
 
 # Copy project files
 COPY        .   ${PROJECT_DIR}
@@ -19,11 +20,11 @@ RUN         export VENV_PATH=$(pipenv --venv); echo $VENV_PATH;
 
 # Nginx config
             # nginx.conf (Nginx자체 설정파일)을 덮어씌우기
-RUN         cp -f   ${PROJECT_DIR}/.config/nginx.conf \
+RUN         cp -f   ${PROJECT_DIR}/.config/${BUILE_MODE}/nginx.conf \
                     /etc/nginx/nginx.conf && \
 
             # available에 nginx_app.conf파일 복사
-            cp -f   ${PROJECT_DIR}/.config/nginx_app.conf \
+            cp -f   ${PROJECT_DIR}/.config/${BUILE_MODE}/nginx_app.conf \
                     /etc/nginx/sites-available/ && \
 
             # 이미 sites-enabled에 있던 모든 내용 삭제
@@ -34,12 +35,14 @@ RUN         cp -f   ${PROJECT_DIR}/.config/nginx.conf \
                     /etc/nginx/sites-enabled
 
 # Supervisor config
-RUN         cp -f   ${PROJECT_DIR}/.config/supervisor_app.conf \
+RUN         cp -f   ${PROJECT_DIR}/.config/${BUILE_MODE}/supervisor_app.conf \
                     /etc/supervisor/conf.d/
 
 
 # Run supervisor
 CMD         supervisord -n
+
+
 
 # Run uWSGI (CMD)
 #CMD         pipenv run uwsgi --ini ${PROJECT_DIR}/.config/uwsgi_http.ini
